@@ -1,5 +1,6 @@
 package com.flz.statemachine.domain;
 
+import com.flz.statemachine.common.statemachine.DoorStateMachine;
 import com.flz.statemachine.common.statemachine.event.DoorCloseEvent;
 import com.flz.statemachine.common.statemachine.event.DoorLockEvent;
 import com.flz.statemachine.common.statemachine.event.DoorOpenEvent;

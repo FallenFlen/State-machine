@@ -1,7 +1,6 @@
-package com.flz.statemachine.domain;
+package com.flz.statemachine.common.statemachine;
 
 
-import com.flz.statemachine.common.statemachine.AbstractStateMachine;
 import com.flz.statemachine.enums.DoorAction;
 import com.flz.statemachine.enums.DoorState;
 import lombok.AllArgsConstructor;
