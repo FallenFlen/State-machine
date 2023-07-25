@@ -32,7 +32,7 @@ public abstract class AbstractStateMachine<T extends Enum, A extends Enum> {
     protected StateEvent event;
     protected A action;
 
-    public final void trigger(A action, DomainStateAggregateRoot<T, A, AbstractStateMachine> aggregateRoot) {
+    public final void trigger(A action, DomainStateAggregateRoot aggregateRoot) {
         // 非空校验
         Objects.requireNonNull(preStates);
         Objects.requireNonNull(nextState);
