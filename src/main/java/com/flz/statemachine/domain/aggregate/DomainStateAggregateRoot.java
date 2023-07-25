@@ -19,14 +19,6 @@ import java.util.Set;
 public abstract class DomainStateAggregateRoot<T extends Enum, A extends Enum, S extends AbstractStateMachine> {
     protected T state;
 
-    public void setState(T state) {
-        this.state = state;
-    }
-
-    public T getState() {
-        return state;
-    }
-
     protected abstract List<S> getStateMachines();
 
     public final void executeStateMachine(A action) {
