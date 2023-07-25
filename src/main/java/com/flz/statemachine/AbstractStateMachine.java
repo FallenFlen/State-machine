@@ -8,8 +8,8 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.collections4.CollectionUtils;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,35 +27,38 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 public abstract class AbstractStateMachine<T extends Enum, A extends Enum> {
-    protected T state;
     protected T nextState;
-    protected Set<T> availableState;
-    protected List<StateEvent> stateEvents;
+    protected Set<T> preStates;
+    protected StateEvent event;
+    protected A action;
 
-    public final void trigger(A action, DomainStateAggregateRoot<T, AbstractStateMachine<T, A>> aggregateRoot) {
+    public final void trigger(A action, DomainStateAggregateRoot<T, A, AbstractStateMachine> aggregateRoot) {
         // 非空校验
-        Objects.requireNonNull(state);
+        Objects.requireNonNull(preStates);
         Objects.requireNonNull(nextState);
         Objects.requireNonNull(aggregateRoot.getState());
 
+        // 只有domain对象的action和状态机的action相同，才能用该domain对象执行状态机的逻辑，否则抛出异常
+        if (this.action != action) {
+            throw new StateMachineException("action of state machine is different from action of domain object");
+        }
         // 只有domain对象的state和状态机的state相同，才能用该domain对象执行状态机的逻辑，否则抛出异常
-        if (aggregateRoot.getState() != state) {
+        if (preStates.contains(aggregateRoot.getState())) {
             throw new StateMachineException("state of state machine is different from state of domain object");
         }
         // 如果domain对象的状态不在允许执行的范围内，则抛出异常
-        if (CollectionUtils.isNotEmpty(availableState) && !availableState.contains(aggregateRoot.getState())) {
-            String availableStateStr = availableState.stream()
+        if (CollectionUtils.isNotEmpty(preStates) && !preStates.contains(aggregateRoot.getState())) {
+            String availableStateStr = preStates.stream()
                     .map(Enum::name)
                     .collect(Collectors.joining(","));
-            throw new StateMachineException("current state is incorrect:" + state + ", available states are:" + availableStateStr);
+            throw new StateMachineException("current state is incorrect:" + aggregateRoot.getState() + ", available states are:" + availableStateStr);
         }
 
         // 改变状态
         aggregateRoot.setState(nextState);
 
         // 触发event
-        if (CollectionUtils.isNotEmpty(stateEvents)) {
-            stateEvents.forEach(StateEvent::execute);
-        }
+        Optional.ofNullable(event)
+                .ifPresent(StateEvent::execute);
     }
 }
