@@ -5,20 +5,40 @@ import com.flz.statemachine.DoorStateMachine;
 import com.flz.statemachine.enums.DoorAction;
 import com.flz.statemachine.enums.DoorState;
 import com.flz.statemachine.event.DoorCloseEvent;
+import com.flz.statemachine.event.DoorLockEvent;
+import com.flz.statemachine.event.DoorOpenEvent;
+import com.flz.statemachine.event.DoorUnlockEvent;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@SuperBuilder
 public class Door extends DomainStateAggregateRoot<DoorState, DoorAction, DoorStateMachine> {
 
-
     public void lock() {
-
+        executeStateMachine(DoorAction.LOCK);
     }
 
     public void unlock() {
+        executeStateMachine(DoorAction.UNLOCK);
+    }
 
+    public void open() {
+        executeStateMachine(DoorAction.PULL);
+    }
+
+    public void close() {
+        executeStateMachine(DoorAction.PUSH);
     }
 
     @Override
@@ -34,19 +54,19 @@ public class Door extends DomainStateAggregateRoot<DoorState, DoorAction, DoorSt
                     .action(DoorAction.PULL) // 当拉门的时候
                     .preStates(Set.of(DoorState.CLOSE)) // 可以从 关闭 状态流转到 开启
                     .nextState(DoorState.OPEN)
-                    .event(new DoorCloseEvent()) // 状态流转后，触发门开启事件
+                    .event(new DoorOpenEvent()) // 状态流转后，触发门开启事件
                     .build());
             add(DoorStateMachine.builder()
                     .action(DoorAction.LOCK) // 当反锁的时候
                     .preStates(Set.of(DoorState.CLOSE)) // 可以从 关闭 状态流转到 锁定
                     .nextState(DoorState.LOCKED)
-                    .event(new DoorCloseEvent()) // 状态流转后，触发门锁定事件
+                    .event(new DoorLockEvent()) // 状态流转后，触发门锁定事件
                     .build());
             add(DoorStateMachine.builder()
                     .action(DoorAction.UNLOCK) // 当反锁的时候
                     .preStates(Set.of(DoorState.LOCKED)) // 可以从 锁定 状态流转到 关闭
                     .nextState(DoorState.CLOSE)
-                    .event(new DoorCloseEvent()) // 状态流转后，触发门解锁事件
+                    .event(new DoorUnlockEvent()) // 状态流转后，触发门解锁事件
                     .build());
         }};
     }

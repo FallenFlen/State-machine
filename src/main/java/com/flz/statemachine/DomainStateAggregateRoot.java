@@ -1,9 +1,20 @@
 package com.flz.statemachine;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@SuperBuilder
 public abstract class DomainStateAggregateRoot<T extends Enum, A extends Enum, S extends AbstractStateMachine> {
     protected T state;
 
