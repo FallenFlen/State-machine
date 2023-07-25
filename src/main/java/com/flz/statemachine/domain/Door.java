@@ -33,11 +33,11 @@ public class Door extends DomainStateAggregateRoot<DoorState, DoorAction, DoorSt
         executeStateMachine(DoorAction.UNLOCK);
     }
 
-    public void open() {
+    public void pull() {
         executeStateMachine(DoorAction.PULL);
     }
 
-    public void close() {
+    public void push() {
         executeStateMachine(DoorAction.PUSH);
     }
 
