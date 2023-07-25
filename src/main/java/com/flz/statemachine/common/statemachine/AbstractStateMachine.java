@@ -61,6 +61,6 @@ public abstract class AbstractStateMachine<T extends Enum, A extends Enum> {
 
         // 触发event
         Optional.ofNullable(event)
-                .ifPresent(StateEvent::execute);
+                .ifPresent(it -> it.execute(aggregateRoot));
     }
 }

@@ -1,8 +1,10 @@
 package com.flz.statemachine.common.statemachine.event;
 
-public class DoorOpenEvent implements StateEvent {
+import com.flz.statemachine.domain.Door;
+
+public class DoorOpenEvent implements StateEvent<Door> {
     @Override
-    public void execute() {
-        System.out.println("门打开了");
+    public void execute(Door door) {
+        System.out.printf("门[%s]打开了\n", door.getCode());
     }
 }

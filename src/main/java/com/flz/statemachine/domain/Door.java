@@ -8,9 +8,9 @@ import com.flz.statemachine.common.statemachine.event.DoorUnlockEvent;
 import com.flz.statemachine.domain.aggregate.DomainStateAggregateRoot;
 import com.flz.statemachine.enums.DoorAction;
 import com.flz.statemachine.enums.DoorState;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
@@ -18,12 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Setter
+@Setter(value = AccessLevel.PROTECTED)
 @SuperBuilder
 public class Door extends DomainStateAggregateRoot<DoorState, DoorAction, DoorStateMachine> {
+    private String code;
 
     public void lock() {
         executeStateMachine(DoorAction.LOCK);
@@ -39,6 +39,13 @@ public class Door extends DomainStateAggregateRoot<DoorState, DoorAction, DoorSt
 
     public void close() {
         executeStateMachine(DoorAction.PUSH);
+    }
+
+    public static Door create(String code, DoorState state) {
+        return Door.builder()
+                .code(code)
+                .state(state)
+                .build();
     }
 
     @Override
