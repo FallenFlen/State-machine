@@ -42,10 +42,6 @@ public abstract class AbstractStateMachine<T extends Enum, A extends Enum> {
         if (this.action != action) {
             throw new StateMachineException("action of state machine is different from action of domain object");
         }
-        // 只有domain对象的state和状态机的state相同，才能用该domain对象执行状态机的逻辑，否则抛出异常
-        if (!preStates.contains(aggregateRoot.getState())) {
-            throw new StateMachineException("state of state machine is different from state of domain object");
-        }
         // 如果domain对象的状态不在允许执行的范围内，则抛出异常
         if (CollectionUtils.isNotEmpty(preStates) && !preStates.contains(aggregateRoot.getState())) {
             String availableStateStr = preStates.stream()
