@@ -53,25 +53,25 @@ public class Door extends DomainStateAggregateRoot<DoorState, DoorAction, DoorSt
         return new ArrayList<>() {{
             add(DoorStateMachine.builder()
                     .action(DoorAction.PUSH) // 当推门的时候
-                    .preStates(Set.of(DoorState.OPEN, DoorState.HALF_OPEN)) // 可以从 开启/半开启 状态流转到 关闭
+                    .prevStates(Set.of(DoorState.OPEN, DoorState.HALF_OPEN)) // 可以从 开启/半开启 状态流转到 关闭
                     .nextState(DoorState.CLOSE)
                     .event(new DoorCloseEvent()) // 状态流转后，触发门关闭事件
                     .build());
             add(DoorStateMachine.builder()
                     .action(DoorAction.PULL) // 当拉门的时候
-                    .preStates(Set.of(DoorState.CLOSE)) // 可以从 关闭 状态流转到 开启
+                    .prevStates(Set.of(DoorState.CLOSE)) // 可以从 关闭 状态流转到 开启
                     .nextState(DoorState.OPEN)
                     .event(new DoorOpenEvent()) // 状态流转后，触发门开启事件
                     .build());
             add(DoorStateMachine.builder()
                     .action(DoorAction.LOCK) // 当反锁的时候
-                    .preStates(Set.of(DoorState.CLOSE)) // 可以从 关闭 状态流转到 锁定
+                    .prevStates(Set.of(DoorState.CLOSE)) // 可以从 关闭 状态流转到 锁定
                     .nextState(DoorState.LOCKED)
                     .event(new DoorLockEvent()) // 状态流转后，触发门锁定事件
                     .build());
             add(DoorStateMachine.builder()
                     .action(DoorAction.UNLOCK) // 当反锁的时候
-                    .preStates(Set.of(DoorState.LOCKED)) // 可以从 锁定 状态流转到 关闭
+                    .prevStates(Set.of(DoorState.LOCKED)) // 可以从 锁定 状态流转到 关闭
                     .nextState(DoorState.CLOSE)
                     .event(new DoorUnlockEvent()) // 状态流转后，触发门解锁事件
                     .build());

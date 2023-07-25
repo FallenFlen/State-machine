@@ -26,14 +26,14 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 public abstract class AbstractStateMachine<T extends Enum, A extends Enum> {
+    protected Set<T> prevStates;
     protected T nextState;
-    protected Set<T> preStates;
     protected StateEvent event;
     protected A action;
 
     public final void trigger(A action, DomainStateAggregateRoot aggregateRoot) {
         // 非空校验
-        Objects.requireNonNull(preStates);
+        Objects.requireNonNull(prevStates);
         Objects.requireNonNull(nextState);
         Objects.requireNonNull(aggregateRoot.getState());
 
@@ -42,8 +42,8 @@ public abstract class AbstractStateMachine<T extends Enum, A extends Enum> {
             throw new StateMachineException("action of state machine is different from action of domain object");
         }
         // 如果domain对象的状态不在允许执行的范围内，则抛出异常
-        if (CollectionUtils.isNotEmpty(preStates) && !preStates.contains(aggregateRoot.getState())) {
-            String availableStateStr = preStates.stream()
+        if (CollectionUtils.isNotEmpty(prevStates) && !prevStates.contains(aggregateRoot.getState())) {
+            String availableStateStr = prevStates.stream()
                     .map(Enum::name)
                     .collect(Collectors.joining(","));
             throw new StateMachineException("current state is incorrect:" + aggregateRoot.getState() + ", available states are:" + availableStateStr);

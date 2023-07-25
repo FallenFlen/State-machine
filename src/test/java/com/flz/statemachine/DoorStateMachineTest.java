@@ -30,7 +30,7 @@ class DoorStateMachineTest {
         DoorCloseEvent doorCloseEvent = spy(DoorCloseEvent.class);
         DoorStateMachine stateMachine = DoorStateMachine.builder()
                 .action(DoorAction.PUSH) // 当推门的时候
-                .preStates(Set.of(DoorState.OPEN, DoorState.HALF_OPEN)) // 可以从 开启/半开启 状态流转到 关闭
+                .prevStates(Set.of(DoorState.OPEN, DoorState.HALF_OPEN)) // 可以从 开启/半开启 状态流转到 关闭
                 .nextState(DoorState.CLOSE)
                 .event(doorCloseEvent) // 状态流转后，触发门关闭事件
                 .build();
@@ -51,7 +51,7 @@ class DoorStateMachineTest {
         DoorCloseEvent doorCloseEvent = spy(DoorCloseEvent.class);
         DoorStateMachine stateMachine = DoorStateMachine.builder()
                 .action(DoorAction.PUSH) // 当推门的时候
-                .preStates(Set.of(DoorState.OPEN, DoorState.HALF_OPEN)) // 可以从 开启/半开启 状态流转到 关闭
+                .prevStates(Set.of(DoorState.OPEN, DoorState.HALF_OPEN)) // 可以从 开启/半开启 状态流转到 关闭
                 .nextState(DoorState.CLOSE)
                 .event(doorCloseEvent) // 状态流转后，触发门关闭事件
                 .build();
