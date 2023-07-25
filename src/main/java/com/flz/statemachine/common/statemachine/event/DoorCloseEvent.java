@@ -1,6 +1,4 @@
-package com.flz.statemachine.event;
-
-import com.flz.statemachine.StateEvent;
+package com.flz.statemachine.common.statemachine.event;
 
 public class DoorCloseEvent implements StateEvent {
     @Override

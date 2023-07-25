@@ -1,13 +1,12 @@
 package com.flz.statemachine.domain;
 
-import com.flz.statemachine.DomainStateAggregateRoot;
-import com.flz.statemachine.DoorStateMachine;
+import com.flz.statemachine.common.statemachine.event.DoorCloseEvent;
+import com.flz.statemachine.common.statemachine.event.DoorLockEvent;
+import com.flz.statemachine.common.statemachine.event.DoorOpenEvent;
+import com.flz.statemachine.common.statemachine.event.DoorUnlockEvent;
+import com.flz.statemachine.domain.aggregate.DomainStateAggregateRoot;
 import com.flz.statemachine.enums.DoorAction;
 import com.flz.statemachine.enums.DoorState;
-import com.flz.statemachine.event.DoorCloseEvent;
-import com.flz.statemachine.event.DoorLockEvent;
-import com.flz.statemachine.event.DoorOpenEvent;
-import com.flz.statemachine.event.DoorUnlockEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

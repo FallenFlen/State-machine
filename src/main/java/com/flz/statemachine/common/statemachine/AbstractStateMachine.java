@@ -1,5 +1,7 @@
-package com.flz.statemachine;
+package com.flz.statemachine.common.statemachine;
 
+import com.flz.statemachine.common.statemachine.event.StateEvent;
+import com.flz.statemachine.domain.aggregate.DomainStateAggregateRoot;
 import com.flz.statemachine.exception.StateMachineException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

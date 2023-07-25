@@ -1,5 +1,6 @@
-package com.flz.statemachine;
+package com.flz.statemachine.domain.aggregate;
 
+import com.flz.statemachine.common.statemachine.AbstractStateMachine;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
