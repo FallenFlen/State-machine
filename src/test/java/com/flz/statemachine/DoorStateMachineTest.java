@@ -58,7 +58,7 @@ class DoorStateMachineTest {
 
         StateMachineException exception = assertThrows(StateMachineException.class, () -> stateMachine.trigger(DoorAction.PUSH, door));
 
-        boolean expected = ("current state is incorrect:CLOSE" + state + ", available states are:OPEN,HALF_OPEN").equals(exception.getMessage())
+        boolean expected = ("current state is incorrect:" + state + ", available states are:OPEN,HALF_OPEN").equals(exception.getMessage())
                 || ("current state is incorrect:" + state + ", available states are:HALF_OPEN,OPEN").equals(exception.getMessage());
         assertTrue(expected);
     }
