@@ -3,7 +3,6 @@ package com.flz.statemachine.common.statemachine;
 import com.flz.statemachine.common.statemachine.event.StateEvent;
 import com.flz.statemachine.domain.aggregate.DomainStateAggregateRoot;
 import com.flz.statemachine.exception.StateMachineException;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,7 +23,6 @@ import java.util.stream.Collectors;
  * 流转到下一个状态后触发的事件
  */
 @SuperBuilder
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -45,7 +43,7 @@ public abstract class AbstractStateMachine<T extends Enum, A extends Enum> {
             throw new StateMachineException("action of state machine is different from action of domain object");
         }
         // 只有domain对象的state和状态机的state相同，才能用该domain对象执行状态机的逻辑，否则抛出异常
-        if (preStates.contains(aggregateRoot.getState())) {
+        if (!preStates.contains(aggregateRoot.getState())) {
             throw new StateMachineException("state of state machine is different from state of domain object");
         }
         // 如果domain对象的状态不在允许执行的范围内，则抛出异常
